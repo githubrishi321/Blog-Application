@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./partials/head") %>
+    <title>Create New Blog - Blogify</title>
+  </head>
+  <body>
+    <%- include("./partials/nav") %>
+    
+    <div class="container">
+      <div class="main-content">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="text-center mb-4">
+              <h1 class="blog-title">
+                <i class="fas fa-plus me-3"></i>Create New Blog
+              </h1>
+              <p class="hero-subtitle">Share your story with the world</p>
+            </div>
+            
+            <% if (locals.error) { %>
+              <div class="alert alert-danger" role="alert">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <%= locals.error %>
+              </div>
+            <% } %>
+            
+            <div class="card">
+              <div class="card-body p-4">
+                <form action="/blog" method="POST" enctype="multipart/form-data">
+                  <div class="mb-4">
+                    <label for="coverImage" class="form-label">
+                      <i class="fas fa-image me-2"></i>Cover Image
+                    </label>
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="coverImage"
+                      name="coverImage"
+                      accept="image/*"
+                      aria-describedby="coverImage"
+                    />
+                    <div class="form-text">
+                      <i class="fas fa-info-circle me-1"></i>
+                      Choose an image to make your blog more engaging (optional)
+                    </div>
+                  </div>
+                  
+                  <div class="mb-4">
+                    <label for="title" class="form-label">
+                      <i class="fas fa-heading me-2"></i>Blog Title
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="title"
+                      name="title"
+                      placeholder="Enter your blog title"
+                      required
+                    />
+                  </div>
+                  
+                  <div class="mb-4">
+                    <label for="body" class="form-label">
+                      <i class="fas fa-edit me-2"></i>Blog Content
+                    </label>
+                    <textarea
+                      class="form-control"
+                      id="body"
+                      name="body"
+                      rows="10"
+                      placeholder="Write your story here..."
+                      required
+                    ></textarea>
+                    <div class="form-text">
+                      <i class="fas fa-lightbulb me-1"></i>
+                      Share your thoughts, experiences, or knowledge with the community
+                    </div>
+                  </div>
+                  
+                  <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                      <i class="fas fa-paper-plane me-2"></i>Publish Blog
+                    </button>
+                    <a href="/" class="btn btn-outline-secondary">
+                      <i class="fas fa-arrow-left me-2"></i>Cancel
+                    </a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <%- include("./partials/scripts") %>
+  </body>
+</html>

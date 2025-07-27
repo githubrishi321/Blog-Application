@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include('./partials/head') %>
+  <title>Sign In - Blogify</title>
+</head>
+<body>
+
+  <%- include('./partials/nav') %>
+
+  <div class="container">
+    <div class="main-content">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="text-center mb-4">
+            <h1 class="blog-title">
+              <i class="fas fa-sign-in-alt me-3"></i>Welcome Back
+            </h1>
+            <p class="hero-subtitle">Sign in to continue sharing your stories</p>
+          </div>
+
+          <% if (locals.error) { %>
+            <div class="alert alert-danger" role="alert">
+              <i class="fas fa-exclamation-triangle me-2"></i>
+              <%= locals.error %>
+            </div>
+          <% } %>
+          
+          <div class="card">
+            <div class="card-body p-4">
+              <form action="/user/signin" method="post">
+                <div class="mb-3">
+                  <label for="email" class="form-label">
+                    <i class="fas fa-envelope me-2"></i>Email Address
+                  </label>
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="password" class="form-label">
+                    <i class="fas fa-lock me-2"></i>Password
+                  </label>
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="text-center mt-4">
+            <p class="text-muted">
+              Don't have an account? 
+              <a href="/user/signup" class="text-decoration-none fw-bold">
+                <i class="fas fa-user-plus me-1"></i>Create Account
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('./partials/scripts') %>
+
+</body>
+</html>
