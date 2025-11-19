@@ -13,16 +13,16 @@ A simple blog application built with Node.js, Express, MongoDB, and EJS.
   ## Screenshots
 
 ### 🏠 Home Page
-![Home Page](./screenshots/HomePage.png)
+![Home Page](.public/uploads/Screenshot 2025-11-20 002005.png)
 
 ### ✍️ Add New Blog
-![Add Blog](./screenshots/Create_New_Blog.png)
+![Add Blog](.public/uploads/Create_New_Blog.png)
 
 ### 👤 Signup Page
-![Signup Page](./screenshots/Create_Account.png)
+![Signup Page](.public/uploads/Create_Account.png)
 
 ### 👤 SignIn Page
-![SignIn Page](./screenshots/SignInPage.png)
+![SignIn Page](.public/uploads/SignInPage.png)
 
 
 ## Setup
