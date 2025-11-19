@@ -10,7 +10,13 @@ function checkForAuthenticationCookie(cookieName) {
     try {
       const userPayload = validateToken(tokenCookieValue);
       req.user = userPayload;
-    } catch (err) {}
+    } catch (err) {
+      // Token is invalid or expired - silently fail and continue without user
+      // This allows the request to proceed, but req.user will be undefined
+      if (process.env.NODE_ENV === "development") {
+        console.log("Token validation failed:", err.message);
+      }
+    }
     next();
   };
 }

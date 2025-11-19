@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const path = require("path");
+const fs = require("fs");
 const router = Router();
 const multer = require("multer");
 const mongoose = require("mongoose");
@@ -7,9 +8,15 @@ const Blog = require("../models/blog");
 const Comment = require("../models/comment");
 const { isAuthenticated } = require("../middlewares/authentication");
 
+const uploadsDirectory = path.resolve("./public/uploads");
+
+if (!fs.existsSync(uploadsDirectory)) {
+  fs.mkdirSync(uploadsDirectory, { recursive: true });
+}
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.resolve(`./public/uploads/`));
+    cb(null, uploadsDirectory);
   },
   filename: function (req, file, cb) {
     const filename = `${Date.now()}-${file.originalname}`;

@@ -12,10 +12,28 @@ const {
 } = require("./middlewares/authentication");
 
 // Connect to MongoDB
+const mongoUrl = process.env.MONGO_URL || "mongodb://localhost:27017/blogify";
+
+if (!process.env.MONGO_URL && process.env.NODE_ENV === "production") {
+  console.error("ERROR: MONGO_URL environment variable is required in production!");
+  process.exit(1);
+}
+
 mongoose
-  .connect(process.env.MONGO_URL || "mongodb://localhost:27017/blogify")
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+  .connect(mongoUrl, {
+    // Connection options for better production handling
+    serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+    socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
+  })
+  .then(() => console.log("MongoDB Connected successfully"))
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+    if (process.env.NODE_ENV === "production") {
+      // In production, exit if DB connection fails
+      console.error("Fatal: Cannot connect to MongoDB in production. Exiting...");
+      process.exit(1);
+    }
+  });
 
 const Blog = require("./models/blog");
 
@@ -66,6 +84,9 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server is running on port ${PORT}`);
+  if (process.env.NODE_ENV !== "production") {
+    console.log(`Access the application at http://localhost:${PORT}`);
+  }
 });

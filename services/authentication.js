@@ -1,6 +1,13 @@
+require("dotenv").config();
 const JWT = require("jsonwebtoken");
 
-const secret = "$uperMan@123";
+const secret = process.env.JWT_SECRET;
+
+if (!secret) {
+  throw new Error(
+    "JWT_SECRET is not configured. Define it in .env or the hosting environment."
+  );
+}
 
 function createTokenForUser(user){
   const payload = {
@@ -10,7 +17,9 @@ function createTokenForUser(user){
     profileImageURL: user.profileImageURL,
     role: user.role,
   };
-  const token = JWT.sign(payload , secret); 
+  const token = JWT.sign(payload, secret, {
+    expiresIn: "7d" // Token expires in 7 days
+  }); 
   return token;
 }
 

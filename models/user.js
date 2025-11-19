@@ -38,9 +38,12 @@ const userSchema = new mongoose.Schema(
 userSchema.pre("save", function (next) {
   const user = this;
   if (!user.isModified("password")) {
-    return;
+    return next();
   }
-  const salt = "secretKey";
+  
+  // Use environment variable for salt, fallback to a default for backward compatibility
+  // In production, always set PASSWORD_SALT in environment variables
+  const salt = process.env.PASSWORD_SALT || "secretKey";
   const hashedPassword = crypto
     .createHmac("sha256", salt)
     .update(user.password)
@@ -73,11 +76,6 @@ userSchema.static(
       .createHmac("sha256", salt)
       .update(password)
       .digest("hex");
-
-    ("salt" + salt);
-    ("hashedPasswordpassword" + hashedPassword);
-
-    ("userProvidePassword" + userProvidePassword);
 
     if (userProvidePassword !== hashedPassword)
       throw new Error("Incorrect Password");
