@@ -1,36 +1,4 @@
-<<<<<<< HEAD
-# YouTube Blog Application
-
-A simple blog application built with Node.js, Express, MongoDB, and EJS.
-
-## Features
-
-- User authentication (signup/signin)
-- Create and view blogs
-- Add comments to blogs
-- Image upload for blog covers
-- Responsive design with Bootstrap
-
-  ## Screenshots
-
-### 🏠 Home Page
-![Home Page](.public/uploads/Screenshot 2025-11-20 002005.png)
-
-### ✍️ Add New Blog
-![Add Blog](.public/uploads/Create_New_Blog.png)
-
-### 👤 Signup Page
-![Signup Page](.public/uploads/Create_Account.png)
-
-### 👤 SignIn Page
-![SignIn Page](.public/uploads/SignInPage.png)
-
-
-## Setup
-
-1. **Install dependencies:**
-=======
-# 📝 Blogify - Full-Stack Blog Application
+#  Blogify - Full-Stack Blog Application
 
 A modern, full-featured blogging platform built with **Node.js**, **Express.js**, **MongoDB**, and **EJS**. Users can create accounts, write blog posts with cover images, and engage through comments.
 
@@ -49,7 +17,8 @@ A modern, full-featured blogging platform built with **Node.js**, **Express.js**
 - **Cover Image Upload** - Add cover images to blogs using Multer
 - **Commenting System** - Engage with blog posts through comments
 - **User Profiles** - Profile images and role-based access (USER/ADMIN)
-- **Responsive Design** - EJS templates with modern styling
+- **Responsive Design** - Modern UI with Bootstrap and custom styling
+- **Custom Favicon** - Brand identity with custom favicon
 
 ---
 
@@ -84,9 +53,16 @@ YOUTUBE-BLOG/
 │   ├── signup.ejs               # Registration page
 │   ├── error.ejs                # Error page
 │   └── partials/                # Reusable template components
+│       ├── head.ejs             # CSS, favicon & meta tags
+│       ├── nav.ejs              # Navigation bar
+│       ├── footer.ejs           # Footer with social links
+│       └── scripts.ejs          # JavaScript includes
 │
 └── 📂 public/                   # Static assets
-    ├── Images/                  # Default images
+    ├── Images/                  # Default images & favicon
+    │   ├── fevicon.png          # Site favicon
+    │   ├── default.png          # Default profile image
+    │   └── default.svg          # SVG profile image
     └── uploads/                 # User-uploaded blog images
 ```
 
@@ -104,6 +80,7 @@ YOUTUBE-BLOG/
 | **Password Hashing** | Crypto (SHA-256 HMAC) |
 | **File Upload** | Multer |
 | **Session Management** | Cookie-Parser |
+| **Styling** | Bootstrap 5 + Custom CSS |
 
 ---
 
@@ -123,93 +100,18 @@ YOUTUBE-BLOG/
    ```
 
 2. **Install dependencies**
->>>>>>> 22c7f8b (Some ui fixes has been done .)
    ```bash
    npm install
    ```
 
-<<<<<<< HEAD
-2. **Create a `.env` file** by copying the sample:
-   ```bash
-   cp env.sample .env
-   ```
-   Update the variables to match your environment (see Environment Variables below).
-
-3. **Start MongoDB** (make sure MongoDB is running on your system)
-
-4. **Run the application:**
-   ```bash
-   npm start
-   # or for development
-   npm run dev
-   ```
-
-5. **Access the application** at `http://localhost:8000`
-
-## Environment Variables
-
-| Variable | Required | Description | Example |
-| --- | --- | --- | --- |
-| `PORT` | No | Port for local development (Render assigns one automatically) | `8000` |
-| `NODE_ENV` | No | Environment mode (`development` or `production`) | `production` |
-| `MONGO_URL` | Yes | MongoDB connection string (use MongoDB Atlas or another managed DB for Render) | `mongodb+srv://user:pass@cluster.mongodb.net/blogify` |
-| `JWT_SECRET` | Yes | Strong secret used to sign authentication cookies | `1d0a75c3a...` |
-| `PASSWORD_SALT` | Recommended | Salt for password hashing (use a strong random string in production) | `your-random-salt-here` |
-
-> ⚠️ Render cannot reach `localhost` databases. Use a hosted MongoDB instance.
-
-## Project Structure
-
-- `models/` - MongoDB schemas
-- `routes/` - Express routes
-- `views/` - EJS templates
-- `middlewares/` - Authentication middleware
-- `services/` - Authentication services
-- `public/` - Static files (CSS, JS, images)
-
-## API Endpoints
-
-- `GET /` - Home page with all blogs
-- `GET /user/signup` - Signup page
-- `POST /user/signup` - Create new user
-- `GET /user/signin` - Signin page
-- `POST /user/signin` - Authenticate user
-- `GET /user/logout` - Logout user
-- `GET /blog/add-new` - Add new blog page
-- `POST /blog` - Create new blog
-- `GET /blog/:id` - View specific blog
-- `POST /blog/comment/:blogId` - Add comment to blog
-
-## Technologies Used
-
-- Node.js
-- Express.js
-- MongoDB with Mongoose
-- EJS templating
-- Bootstrap for UI
-- Multer for file uploads
-- JWT for authentication 
-
-## Deploying to Render
-
-1. Push the repository to GitHub/GitLab.
-2. In Render, choose **New ➜ Blueprint** (or **New ➜ Web Service**) and point it at this repo. The included `render.yaml` describes a Node web service that installs dependencies and executes `npm start`.
-3. When prompted, add the environment variables:
-   - `MONGO_URL` – MongoDB Atlas or another hosted Mongo connection string.
-   - `JWT_SECRET` – a long, random secret string.
-   - `PASSWORD_SALT` – a strong random salt for password hashing (recommended).
-   - `NODE_ENV` – set to `production` (already configured in `render.yaml`).
-   - (Optional) `PORT` for local overrides; Render provides its own port at runtime.
-4. Click **Deploy**. Render will run `npm install` during the build stage and `npm start` for the runtime.
-
-> Uploaded cover images are stored under `public/uploads`. Render’s disk is ephemeral; for long-term storage use S3, Cloudinary, etc.
-=======
 3. **Configure environment variables**
    
    Create/update `.env` file:
    ```env
    PORT=8000
    MONGO_URL=mongodb://localhost:27017/blogify
+   JWT_SECRET=your-jwt-secret-key
+   PASSWORD_SALT=your-password-salt
    ```
 
 4. **Create uploads directory**
@@ -230,6 +132,18 @@ YOUTUBE-BLOG/
    ```
    http://localhost:8000
    ```
+
+---
+
+## 🔑 Environment Variables
+
+| Variable | Required | Description | Example |
+|----------|----------|-------------|---------|
+| `PORT` | No | Server port (default: 8000) | `8000` |
+| `NODE_ENV` | No | Environment mode | `production` |
+| `MONGO_URL` | Yes | MongoDB connection string | `mongodb+srv://user:pass@cluster.mongodb.net/blogify` |
+| `JWT_SECRET` | Yes | Secret for JWT signing | `your-secret-key` |
+| `PASSWORD_SALT` | Recommended | Salt for password hashing | `your-random-salt` |
 
 ---
 
@@ -325,6 +239,23 @@ YOUTUBE-BLOG/
 
 ---
 
+## 🚀 Deployment
+
+### Deploying to Render
+
+1. Push the repository to GitHub/GitLab
+2. Create a new Web Service on Render
+3. Add environment variables:
+   - `MONGO_URL` – MongoDB Atlas connection string
+   - `JWT_SECRET` – Random secret string
+   - `PASSWORD_SALT` – Random salt for passwords
+   - `NODE_ENV` – Set to `production`
+4. Deploy!
+
+> ⚠️ **Note**: Uploaded images are stored locally. For production, consider using S3 or Cloudinary.
+
+---
+
 ## 🧪 Development
 
 ```bash
@@ -364,5 +295,7 @@ This project is licensed under the ISC License.
 
 ## 👨‍💻 Author
 
-Built with ❤️ for learning and demonstration purposes.
->>>>>>> 22c7f8b (Some ui fixes has been done .)
+**Rishi** - Crafted with dedication for learning and demonstration purposes.
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/rishikesh-c-rpc/)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/githubrishi321)
