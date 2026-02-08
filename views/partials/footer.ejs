@@ -1,0 +1,60 @@
+<footer class="footer mt-5">
+    <div class="container">
+        <div class="row">
+            <!-- About Section -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <h5 class="footer-title">
+                    <i class="fas fa-pen-fancy me-2"></i>Blogify
+                </h5>
+                <p class="footer-text">
+                    A modern blogging platform where you can share your thoughts, stories, and ideas with the world.
+                    Join our community of writers and readers today!
+                </p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <h5 class="footer-title">Quick Links</h5>
+                <ul class="footer-links">
+                    <li><a href="/"><i class="fas fa-home me-2"></i>Home</a></li>
+                    <% if (locals.user) { %>
+                        <li><a href="/blog/add-new"><i class="fas fa-plus me-2"></i>Create Blog</a></li>
+                        <li><a href="/user/logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        <% } else { %>
+                            <li><a href="/user/signin"><i class="fas fa-sign-in-alt me-2"></i>Sign In</a></li>
+                            <li><a href="/user/signup"><i class="fas fa-user-plus me-2"></i>Sign Up</a></li>
+                            <% } %>
+                </ul>
+            </div>
+
+            <!-- Social Links -->
+            <div class="col-lg-4 col-md-12 mb-4">
+                <h5 class="footer-title">Connect With Us</h5>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/rishikesh-c-rpc/" target="_blank" class="social-link"
+                        title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://github.com/githubrishi321" target="_blank" class="social-link" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                <p class="footer-text mt-3">
+                    <i class="fas fa-envelope me-2"></i>chavanrishikesh35@gmail.com
+                </p>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <hr class="footer-divider">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="copyright">
+                    &copy; <%= new Date().getFullYear() %> Blogify. All rights reserved.
+                        <span class="d-none d-md-inline">| Made with <i class="fas fa-heart text-danger"></i> by
+                            Rishi</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>

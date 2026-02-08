@@ -1,88 +1,621 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%- include('./partials/head') %>
-  <title>Sign Up - Blogify</title>
+    <title>Sign Up - Blogify</title>
+    <style>
+      .auth-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .auth-wrapper {
+        display: flex;
+        max-width: 1000px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.98);
+        border-radius: 24px;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+      }
+
+      .auth-illustration {
+        flex: 1;
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        padding: 60px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .auth-illustration::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+        animation: rotate 30s linear infinite;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .auth-illustration-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .auth-illustration i.main-icon {
+        font-size: 5rem;
+        color: white;
+        margin-bottom: 30px;
+        filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
+      }
+
+      .auth-illustration h2 {
+        color: white;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+      }
+
+      .auth-illustration p {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1rem;
+        line-height: 1.6;
+        max-width: 300px;
+      }
+
+      .features-list {
+        list-style: none;
+        padding: 0;
+        margin-top: 30px;
+        text-align: left;
+      }
+
+      .features-list li {
+        color: white;
+        padding: 10px 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.95rem;
+      }
+
+      .features-list li i {
+        width: 28px;
+        height: 28px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+      }
+
+      .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        z-index: 0;
+      }
+
+      .floating-shapes span {
+        position: absolute;
+        display: block;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        animation: float 15s infinite;
+      }
+
+      .floating-shapes span:nth-child(1) {
+        width: 80px;
+        height: 80px;
+        top: 10%;
+        left: 10%;
+        animation-delay: 0s;
+      }
+
+      .floating-shapes span:nth-child(2) {
+        width: 60px;
+        height: 60px;
+        top: 60%;
+        right: 10%;
+        animation-delay: 2s;
+      }
+
+      .floating-shapes span:nth-child(3) {
+        width: 40px;
+        height: 40px;
+        bottom: 20%;
+        left: 20%;
+        animation-delay: 4s;
+      }
+
+      @keyframes float {
+
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 0.5;
+        }
+
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+          opacity: 1;
+        }
+      }
+
+      .auth-form-section {
+        flex: 1;
+        padding: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .auth-header {
+        margin-bottom: 30px;
+      }
+
+      .auth-header h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 10px;
+      }
+
+      .auth-header p {
+        color: var(--gray-color);
+        font-size: 1rem;
+      }
+
+      .form-floating-label {
+        position: relative;
+        margin-bottom: 22px;
+      }
+
+      .form-floating-label input {
+        width: 100%;
+        padding: 16px 18px 16px 48px;
+        font-size: 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 14px;
+        transition: all 0.3s ease;
+        background: #f8fafc;
+      }
+
+      .form-floating-label input:focus {
+        border-color: var(--primary-color);
+        background: white;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        outline: none;
+      }
+
+      .form-floating-label .input-icon {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray-color);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .form-floating-label input:focus+.input-icon {
+        color: var(--primary-color);
+      }
+
+      .form-floating-label label {
+        position: absolute;
+        top: -10px;
+        left: 15px;
+        background: white;
+        padding: 0 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--gray-color);
+      }
+
+      .form-hint {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.82rem;
+        color: var(--gray-color);
+        margin-top: 8px;
+        padding-left: 5px;
+      }
+
+      .form-hint i {
+        color: var(--accent-color);
+      }
+
+      .password-toggle {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--gray-color);
+        cursor: pointer;
+        padding: 5px;
+        transition: color 0.3s ease;
+      }
+
+      .password-toggle:hover {
+        color: var(--primary-color);
+      }
+
+      .password-strength {
+        height: 4px;
+        background: #e5e7eb;
+        border-radius: 2px;
+        margin-top: 10px;
+        overflow: hidden;
+      }
+
+      .password-strength-bar {
+        height: 100%;
+        width: 0%;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+      }
+
+      .strength-weak {
+        width: 33%;
+        background: #ef4444;
+      }
+
+      .strength-medium {
+        width: 66%;
+        background: #f59e0b;
+      }
+
+      .strength-strong {
+        width: 100%;
+        background: #10b981;
+      }
+
+      .auth-btn {
+        width: 100%;
+        padding: 16px 30px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: white;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        border: none;
+        border-radius: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .auth-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+      }
+
+      .auth-btn:active {
+        transform: translateY(-1px);
+      }
+
+      .terms-text {
+        font-size: 0.85rem;
+        color: var(--gray-color);
+        text-align: center;
+        margin-top: 20px;
+        line-height: 1.6;
+      }
+
+      .terms-text a {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .divider {
+        display: flex;
+        align-items: center;
+        margin: 25px 0;
+        gap: 15px;
+      }
+
+      .divider::before,
+      .divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+      }
+
+      .divider span {
+        color: var(--gray-color);
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .auth-footer {
+        text-align: center;
+      }
+
+      .auth-footer p {
+        color: var(--gray-color);
+        margin-bottom: 10px;
+      }
+
+      .auth-footer a {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 700;
+        transition: all 0.3s ease;
+      }
+
+      .auth-footer a:hover {
+        color: var(--secondary-color);
+      }
+
+      .back-home {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--gray-color);
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 25px;
+        transition: all 0.3s ease;
+      }
+
+      .back-home:hover {
+        color: var(--primary-color);
+        transform: translateX(-5px);
+      }
+
+      .alert {
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .alert-danger {
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #dc2626;
+      }
+
+      @media (max-width: 900px) {
+        .auth-illustration {
+          display: none;
+        }
+
+        .auth-wrapper {
+          max-width: 480px;
+        }
+
+        .auth-form-section {
+          padding: 40px 30px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .auth-form-section {
+          padding: 30px 20px;
+        }
+
+        .auth-header h1 {
+          font-size: 1.8rem;
+        }
+
+        .form-floating-label input {
+          padding: 14px 14px 14px 42px;
+        }
+      }
+    </style>
 </head>
-<body>
 
-  <%- include('./partials/nav') %>
+<body style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); overflow-x: hidden;">
 
-  <div class="container">
-    <div class="main-content">
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <div class="text-center mb-4">
-            <h1 class="blog-title">
-              <i class="fas fa-user-plus me-3"></i>Create Account
-            </h1>
-            <p class="hero-subtitle">Join our community and start sharing your stories</p>
-          </div>
-
-          <% if (locals.error) { %>
-            <div class="alert alert-danger" role="alert">
-              <i class="fas fa-exclamation-triangle me-2"></i>
-              <%= locals.error %>
-            </div>
-          <% } %>
-          
-          <div class="card">
-            <div class="card-body p-4">
-              <form action="/user/signup" method="post">
-                <div class="mb-3">
-                  <label for="fullName" class="form-label">
-                    <i class="fas fa-user me-2"></i>Full Name
-                  </label>
-                  <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter your full name" required>
-                </div>
-
-                <div class="mb-3">
-                  <label for="email" class="form-label">
-                    <i class="fas fa-envelope me-2"></i>Email Address
-                  </label>
-                  <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
-                  <div class="form-text">
-                    <i class="fas fa-shield-alt me-1"></i>
-                    We'll never share your email with anyone else.
-                  </div>
-                </div>
-
-                <div class="mb-3">
-                  <label for="password" class="form-label">
-                    <i class="fas fa-lock me-2"></i>Password
-                  </label>
-                  <input type="password" class="form-control" id="password" name="password" placeholder="Create a strong password" required minlength="6">
-                  <div class="form-text">
-                    <i class="fas fa-info-circle me-1"></i>
-                    Password must be at least 6 characters long.
-                  </div>
-                </div>
-                
-                <div class="d-grid">
-                  <button type="submit" class="btn btn-primary btn-lg">
-                    <i class="fas fa-user-plus me-2"></i>Create Account
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-
-          <div class="text-center mt-4">
-            <p class="text-muted">
-              Already have an account? 
-              <a href="/user/signin" class="text-decoration-none fw-bold">
-                <i class="fas fa-sign-in-alt me-1"></i>Sign In
-              </a>
-            </p>
-          </div>
+  <div class="auth-container">
+    <div class="auth-wrapper">
+      <!-- Left Illustration Section -->
+      <div class="auth-illustration">
+        <div class="floating-shapes">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
+        <div class="auth-illustration-content">
+          <i class="fas fa-rocket main-icon"></i>
+          <h2>Start Your Journey</h2>
+          <p>Join thousands of writers sharing their stories and ideas with the world.</p>
+
+          <ul class="features-list">
+            <li>
+              <i class="fas fa-check"></i>
+              Write and publish unlimited blogs
+            </li>
+            <li>
+              <i class="fas fa-check"></i>
+              Connect with a community of readers
+            </li>
+            <li>
+              <i class="fas fa-check"></i>
+              Get feedback through comments
+            </li>
+            <li>
+              <i class="fas fa-check"></i>
+              Completely free to use
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Right Form Section -->
+      <div class="auth-form-section">
+        <a href="/" class="back-home">
+          <i class="fas fa-arrow-left"></i>
+          Back to Home
+        </a>
+
+        <div class="auth-header">
+          <h1>Create Account</h1>
+          <p>Join our community and start sharing your stories.</p>
+        </div>
+
+        <% if (locals.error) { %>
+          <div class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>
+              <%= locals.error %>
+            </span>
+          </div>
+          <% } %>
+
+            <form action="/user/signup" method="post">
+              <div class="form-floating-label">
+                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                <i class="fas fa-user input-icon"></i>
+                <label for="fullName">Full Name</label>
+              </div>
+
+              <div class="form-floating-label">
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <i class="fas fa-envelope input-icon"></i>
+                <label for="email">Email Address</label>
+                <div class="form-hint">
+                  <i class="fas fa-shield-alt"></i>
+                  We'll never share your email with anyone else.
+                </div>
+              </div>
+
+              <div class="form-floating-label">
+                <input type="password" id="password" name="password" placeholder="Create a password" required
+                  minlength="6" oninput="checkPasswordStrength(this.value)">
+                <i class="fas fa-lock input-icon"></i>
+                <label for="password">Password</label>
+                <button type="button" class="password-toggle" onclick="togglePassword()">
+                  <i class="fas fa-eye" id="toggleIcon"></i>
+                </button>
+                <div class="password-strength">
+                  <div class="password-strength-bar" id="strengthBar"></div>
+                </div>
+                <div class="form-hint">
+                  <i class="fas fa-info-circle"></i>
+                  Password must be at least 6 characters long.
+                </div>
+              </div>
+
+              <button type="submit" class="auth-btn">
+                <i class="fas fa-user-plus"></i>
+                Create Account
+              </button>
+            </form>
+
+            <p class="terms-text">
+              By signing up, you agree to our
+              <a href="#">Terms of Service</a> and
+              <a href="#">Privacy Policy</a>
+            </p>
+
+            <div class="divider">
+              <span>or</span>
+            </div>
+
+            <div class="auth-footer">
+              <p>Already have an account?</p>
+              <a href="/user/signin">
+                <i class="fas fa-sign-in-alt me-2"></i>Sign In
+              </a>
+            </div>
       </div>
     </div>
   </div>
 
-  <%- include('./partials/scripts') %>
+  <script>
+    function togglePassword() {
+      const passwordInput = document.getElementById('password');
+      const toggleIcon = document.getElementById('toggleIcon');
 
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+      } else {
+        passwordInput.type = 'password';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+      }
+    }
+
+    function checkPasswordStrength(password) {
+      const strengthBar = document.getElementById('strengthBar');
+      strengthBar.className = 'password-strength-bar';
+
+      if (password.length === 0) {
+        strengthBar.style.width = '0%';
+        return;
+      }
+
+      let strength = 0;
+
+      // Length check
+      if (password.length >= 6) strength++;
+      if (password.length >= 10) strength++;
+
+      // Contains number
+      if (/\d/.test(password)) strength++;
+
+      // Contains special character
+      if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength++;
+
+      // Contains uppercase and lowercase
+      if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+
+      if (strength <= 2) {
+        strengthBar.className = 'password-strength-bar strength-weak';
+      } else if (strength <= 3) {
+        strengthBar.className = 'password-strength-bar strength-medium';
+      } else {
+        strengthBar.className = 'password-strength-bar strength-strong';
+      }
+    }
+  </script>
+
+  <%- include('./partials/scripts') %>
 </body>
+
 </html>

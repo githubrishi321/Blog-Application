@@ -73,12 +73,7 @@
                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
                   <div class="card h-100">
                     <% if (blog.coverImageURL) { %>
-                      <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="Blog cover"
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                      <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
-                        style="display: none; height: 200px;">
-                        <i class="fas fa-image fa-2x text-muted"></i>
-                      </div>
+                      <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="Blog cover" />
                       <% } else { %>
                         <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
                           style="height: 200px;">
@@ -86,11 +81,26 @@
                         </div>
                         <% } %>
                           <div class="card-body d-flex flex-column">
+                            <!-- Author Info -->
+                            <div class="d-flex align-items-center mb-3">
+                              <% if (blog.createdBy) { %>
+                                <img src="<%= blog.createdBy.profileImageURL %>" class="rounded-circle me-2" width="32"
+                                  height="32" style="object-fit: cover;" onerror="this.src='/Images/default.svg';" />
+                                <small class="text-muted">
+                                  <i class="fas fa-user me-1"></i>
+                                  <%= blog.createdBy.fullName %>
+                                </small>
+                                <% } else { %>
+                                  <img src="/Images/default.svg" class="rounded-circle me-2" width="32" height="32" />
+                                  <small class="text-muted">Anonymous</small>
+                                  <% } %>
+                            </div>
+
                             <h5 class="card-title fw-bold text-truncate">
                               <%= blog.title %>
                             </h5>
-                            <p class="card-text text-muted flex-grow-1">
-                              <%= blog.body.length> 120 ? blog.body.substring(0, 120) + '...' : blog.body %>
+                            <p class="card-text text-muted flex-grow-1" style="min-height: 80px;">
+                              <%= blog.body.length> 180 ? blog.body.substring(0, 180) + '...' : blog.body %>
                             </p>
                             <div class="mt-auto">
                               <a href="/blog/<%= blog._id %>" class="btn btn-primary w-100">
@@ -112,7 +122,8 @@
       </div>
     </div>
 
-    <%- include("./partials/scripts") %>
+    <%- include("./partials/footer") %>
+      <%- include("./partials/scripts") %>
 </body>
 
 </html>

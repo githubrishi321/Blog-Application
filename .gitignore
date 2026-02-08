@@ -1,2 +1,45 @@
+<<<<<<< HEAD
 node_modules/
 .env
+=======
+# Dependencies
+node_modules/
+
+# Environment variables (IMPORTANT - contains secrets!)
+.env
+.env.local
+.env.development
+.env.production
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE/Editor folders
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Uploaded files (if you want to ignore user uploads)
+# public/uploads/
+
+# Build output
+dist/
+build/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Coverage reports
+coverage/
+
+
+>>>>>>> 22c7f8b (Some ui fixes has been done .)
